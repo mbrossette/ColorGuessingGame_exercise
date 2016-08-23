@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Let's Play a Game</title> 
+    </head>
+    <body onload="do_game()"> 
+        <h1>Guess a Color!</h1>
+        
+        <script>
+            //declaration of global variables and array for colors 
+            var target_index;
+            var guesses = 1;
+            //Include a list of colors in an array
+            var colors = ["blue", "green", "indigo", "orange", "red", "violet", "yellow"];
+            colors = colors.sort();
+            var colors_joined = colors.join(", ");
+            var guess_input_text = "none";
+            var guess_input;
+            var finished = false;
+              function do_game(){ //In function do_game():
+                  
+                  var random_number = Math.random() * (colors.length - 1);
+                  var random_number_integer = Math.floor(random_number);
+                  //Randomly select one of those colors in the array as the target
+                  target_index = random_number_integer;
+                  
+                  //Display the target (to help with debugging and marking) e.g. alert(target);
+                  var answer = String(colors[random_number_integer]);
+                  //correct answer for testing purposes
+                  alert("The correct answer is: " + answer);
+                 
+                  
+                  /*Your part 1 work should be a simple ‘game’ which uses a loop. In the loop, the player is shown the list of colors and is asked for their guess. However, no feedback is given to the player based upon their input. In other words, the function check_guess() is not required in part 1. The loop finishes when the player enters the correct color.*/
+                  /*Go into a loop which Shows the array of colors and asks the player for their guess Stops if the player’s guess is the same as the target*/
+                  while (!finished) {
+                    guess_input_text = prompt("I am thinking of one of these colors:\n\n" + colors_joined + "\n\n What color am I thinking of?").toLowerCase(); //change to lower case due to case sensitive
+                      //indexOf will give us the integer position of color in array - makes it easier to compare
+                    guess_input = colors.indexOf(guess_input_text);
+                    if(guess_input == target_index) finished = true;
+                  }
+             }
+            
+        </script>
+        
+    </body>
+</html>
+
