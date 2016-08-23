@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>Let's Play a Game</title> 
+        
+    </head>
+    
+    <body onload="do_game()" bgcolor="grey"> 
+        <h1>Guess a Color!</h1>
+        
+        <script>
+            //declaration of global variables and array for colors 
+            var target_index;
+            var guesses = 1;
+            //Include a list of colors in an array
+            var colors = ["blue", "green", "indigo", "orange", "red", "violet", "yellow"];
+            colors = colors.sort();
+            var colors_joined = colors.join(", ");
+            var guess_input_text = "none";
+            var guess_input;
+            var finished = false;
+
+            //In function do_game():
+            function do_game() {
+              var random_number = Math.random() * (colors.length);
+              var random_number_integer = Math.floor(random_number);
+              //Randomly select one of those colors in the array as the target
+              target_index = random_number_integer;
+                //convert to string or will give us random number displayed to user instead of color name
+              var answer = String(colors[random_number_integer]);
+              //Optionally: display the target (to help with debugging and marking) e.g. alert(target);
+              //alert("The correct answer is: " + answer);
+                
+                //while finished is not equal to true prompt user for answer
+                //once finished is equal to true we will no longer ask for answer
+                //Go into a loop 
+                
+                  while (!finished) {
+                    //Shows the array of colors and asks the player for their guess
+                    guess_input_text = prompt("I am thinking of one of these colors:\n\n" + colors_joined + "\n\n What color am I thinking of?").toLowerCase(); //change to lower case due to case sensitive
+                      //indexOf will give us the integer position of color in array - makes it easier to compare
+                    guess_input = colors.indexOf(guess_input_text);
+                    finished = check_guess();
+                  }
+
+                //comparing user input at prompt to the target integer
+                //Using the function check_guess():
+              function check_guess() {
+                if (guess_input == -1) { // -1 is error because not found in colors array
+                  //Displays a message such as ‘I don’t recognize that color!’ If the text entered by the player is not in the array of colors, 
+                  alert("Sorry, I don't recognize your color. \n\n Please try again.");
+                  return false;
+                }
+                if (guess_input > target_index) {
+                  //Displays a message such as ‘Your input is alphabetically higher than mine!’ if that is true, OR:
+                  alert("Sorry, your guess is not correct! \n\n Hint: Your color is alphabetically higher than mine.\n\n Please try again.");
+                  guesses += 1;
+                  return false;
+                }
+                if (guess_input < target_index) {
+                  //Displays a message such as ‘Your input is alphabetically lower than mine!’ if that is true, OR:
+                  alert("Sorry, your guess is not correct!\n\n Hint: Your color is alphabetically lower than mine.\n\n Please try again.");
+                  guesses += 1;
+                  return false;
+                }
+                  //If the player’s input is the same as the target: changes the web page background color to the target color and 
+                  myBody=document.getElementsByTagName("body")[0];
+                  myBody.style.background= answer;
+                  //displays a message which includes the total number of guesses such as ‘You are right! You took 8 guesses!’ 
+                  alert("Congratulations! You have guessed the color!\n\n It took you " + guesses + " guesses to finish the game!\n\n You can see the color in the background.");
+                  //Stops if the player’s input is the same as the target
+                  return true;
+              }
+            }
+        </script>
+        
+    </body>
+</html>
+
